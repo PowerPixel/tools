@@ -1,3 +1,3 @@
-CREATE USER outline;
+CREATE USER outline WITH PASSWORD 'outline';
 CREATE DATABASE outline;
 GRANT ALL PRIVILEGES ON DATABASE outline TO outline;
