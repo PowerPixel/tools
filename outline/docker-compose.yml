@@ -1,10 +1,13 @@
-version: "3.2"
+version: "3.8"
 
 services:
   outline:
     user: "${UID}:${GID}"
     image: docker.getoutline.com/outlinewiki/outline:0.75.2@sha256:830923e3e7b4b3f2969db56a6033a03947f9a191d35b60a1fd80ed130ade5a1d
     env_file: ./outline.env
+    networks:
+      - db
+      - app
     ports:
       - "3000:3000"
     volumes:
@@ -17,6 +20,8 @@ services:
     user: "${UID}:${GID}"
     image: ghcr.io/microsoft/garnet:sha-716cfb8@sha256:0e845a1647b3915dada2b3b1c1b4b1a36d586fe173e90efbbd4558363c12d86b
     env_file: ./outline.env
+    networks:
+      - db
     ports:
       - "6379:6379"
 
@@ -24,6 +29,8 @@ services:
     user: "${UID}:${GID}"
     image: postgres:16.2-alpine@sha256:951bfda460300925caa3949eaa092ba022e9aec191bbea9056a39e2382260b27
     env_file: ./outline.env
+    networks:
+      - db
     ports:
       - "5432:5432"
     volumes:
@@ -44,8 +51,8 @@ services:
     ports:
       - '80:80'
       - '443:443'
-    links:
-      - outline
+    networks:
+      - app
     restart: always
     volumes:
       - /data/outline/https-portal-data:/var/lib/https-portal
@@ -59,3 +66,7 @@ services:
       STAGE: 'production'
       WEBSOCKET: 'true'
       CLIENT_MAX_BODY_SIZE: '0'
+
+networks:
+  app:
+  db:
