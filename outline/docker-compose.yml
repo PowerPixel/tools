@@ -1,0 +1,62 @@
+version: "3.2"
+
+services:
+  outline:
+    user: "${UID}:${GID}"
+    image: docker.getoutline.com/outlinewiki/outline:0.75.2@sha256:830923e3e7b4b3f2969db56a6033a03947f9a191d35b60a1fd80ed130ade5a1d
+    env_file: ./outline.env
+    ports:
+      - "3000:3000"
+    volumes:
+      - /data/outline/raw:/var/lib/outline/data
+    depends_on:
+      - postgres
+      - redis
+
+  redis:
+    user: "${UID}:${GID}"
+    image: ghcr.io/microsoft/garnet:sha-716cfb8@sha256:0e845a1647b3915dada2b3b1c1b4b1a36d586fe173e90efbbd4558363c12d86b
+    env_file: ./outline.env
+    ports:
+      - "6379:6379"
+
+  postgres:
+    user: "${UID}:${GID}"
+    image: postgres:16.2-alpine@sha256:951bfda460300925caa3949eaa092ba022e9aec191bbea9056a39e2382260b27
+    env_file: ./outline.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - /data/outline/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "outline", "-U", "user"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    environment:
+      POSTGRES_USER: 'user'
+      POSTGRES_PASSWORD: 'pass'
+      POSTGRES_DB: 'outline'
+
+  https-portal:
+    user: "${UID}:${GID}"
+    image: steveltn/https-portal:1.23.1@sha256:23e4e3dd2283bd11470787634b40eed43aad5cf05879a53a80363143c135774b
+    env_file: ./outline.env
+    ports:
+      - '80:80'
+      - '443:443'
+    links:
+      - outline
+    restart: always
+    volumes:
+      - /data/outline/https-portal-data:/var/lib/https-portal
+    healthcheck:
+      test: ["CMD", "service", "nginx", "status"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    environment:
+      DOMAINS: 'docs.powerpixel.fr -> http://outline:3000'
+      STAGE: 'production'
+      WEBSOCKET: 'true'
+      CLIENT_MAX_BODY_SIZE: '0'

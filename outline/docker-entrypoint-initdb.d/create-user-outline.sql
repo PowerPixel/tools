@@ -1,0 +1,3 @@
+CREATE USER outline;
+CREATE DATABASE outline;
+GRANT ALL PRIVILEGES ON DATABASE outline TO outline;
