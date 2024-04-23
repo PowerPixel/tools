@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.9"
 
 services:
   outline:
@@ -35,6 +35,7 @@ services:
       - "5432:5432"
     volumes:
       - /data/outline/postgres:/var/lib/postgresql/data
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     healthcheck:
       test: ["CMD", "pg_isready", "-d", "outline", "-U", "user"]
       interval: 30s
