@@ -1,4 +1,4 @@
 CREATE USER outline WITH PASSWORD 'outline';
 CREATE DATABASE knowledge;
+GRANT ALL PRIVILEGES ON DATABASE knowledge TO outline;
 GRANT ALL ON SCHEMA public TO outline;
-GRANT ALL PRIVILEGES ON DATABASE knowledge   TO outline;
