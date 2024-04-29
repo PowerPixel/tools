@@ -3,7 +3,6 @@ services:
   redis:
     user: "${UID}:${GID}"
     image: ghcr.io/microsoft/garnet:sha-716cfb8@sha256:0e845a1647b3915dada2b3b1c1b4b1a36d586fe173e90efbbd4558363c12d86b
-    env_file: ./outline.env
     networks:
       - redis
     ports:

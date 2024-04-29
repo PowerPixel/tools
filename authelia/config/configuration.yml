@@ -28,7 +28,7 @@ session:
   cookies:
     - name: 'authelia_session'
       domain: 'powerpixel.fr'  # Should match whatever your root protected domain is
-      authelia_url: 'https://authelia.poerpixel.fr'
+      authelia_url: 'https://authelia.powerpixel.fr'
       expiration: '1 hour'
       inactivity: '5 minutes'
 

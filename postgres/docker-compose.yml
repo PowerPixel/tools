@@ -8,10 +8,10 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - /data/outline/postgres:/var/lib/postgresql/data
+      - /data/postgres:/var/lib/postgresql/data
       - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     healthcheck:
-      test: ["CMD", "pg_isready", "-d", "outline", "-U", "user"]
+      test: ["CMD", "pg_isready"]
       interval: 30s
       timeout: 20s
       retries: 3
