@@ -1,0 +1,5 @@
+CREATE USER kratos WITH PASSWORD 'kratos';
+CREATE DATABASE kratos;
+GRANT ALL PRIVILEGES ON DATABASE kratos TO kratos;
+\c kratos
+GRANT ALL ON SCHEMA kratos TO kratos;

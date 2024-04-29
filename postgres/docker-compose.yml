@@ -1,0 +1,25 @@
+services:
+  postgres:
+    user: "${UID}:${GID}"
+    image: postgres:16.2-alpine@sha256:951bfda460300925caa3949eaa092ba022e9aec191bbea9056a39e2382260b27
+    env_file: ./outline.env
+    networks:
+      - postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - /data/outline/postgres:/var/lib/postgresql/data
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "outline", "-U", "user"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    environment:
+      POSTGRES_USER: 'root'
+      POSTGRES_PASSWORD: 'root'
+      POSTGRES_DB: 'root'
+
+networks:
+  postgres:
+    external: true

@@ -1,0 +1,26 @@
+services:
+  https-portal:
+    image: steveltn/https-portal:1.23.1@sha256:23e4e3dd2283bd11470787634b40eed43aad5cf05879a53a80363143c135774b
+    env_file: ./outline.env
+    ports:
+      - '80:80'
+      - '443:443'
+    networks:
+      - app
+    restart: always
+    volumes:
+      - /data/outline/https-portal-data:/var/lib/https-portal
+    healthcheck:
+      test: ["CMD", "service", "nginx", "status"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    environment:
+      DOMAINS: 'docs.powerpixel.fr -> http://outline:3000, oidc.issuer.powerpixel.fr -> http://hydra:4444, oidc.powerpixel.fr -> http://hydra:3000'
+      STAGE: 'production'
+      WEBSOCKET: 'true'
+      CLIENT_MAX_BODY_SIZE: '0'
+
+networks:
+  https_portal:
+    external: true

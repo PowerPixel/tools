@@ -1,0 +1,5 @@
+CREATE USER hydra WITH PASSWORD 'hydra';
+CREATE DATABASE hydra;
+GRANT ALL PRIVILEGES ON DATABASE hydra TO hydra;
+\c hydra
+GRANT ALL ON SCHEMA hydra TO hydra;
