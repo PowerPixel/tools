@@ -1,0 +1,11 @@
+---
+# No, I will not setup an LDAP server
+users:
+  authelia:
+    disabled: false
+    displayname: "PowerPixel"
+    password: "$argon2id$v=19$m=65536,t=3,p=4$/ycdPAyLoSX6YbETgWxI/A$DI85GG6P9ICuKEn2TdzPZrlDaPVhdJxLkIAHvQf+GZw"
+    email: powerpixel3@proton.me
+    groups:
+      - admins
+      - docs
