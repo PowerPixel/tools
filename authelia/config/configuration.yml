@@ -47,7 +47,7 @@ storage:
 identity_providers:
   oidc:
     jwks:
-      - key: {{ secret "/secrets/rsa.2048.pem" | mindent 10 "|" | msquote }}
+      - key: {{ secret "/secrets/JWK_OIDC_KEY" | mindent 10 "|" | msquote }}
     access_token_lifespan: 1h
     authorize_code_lifespan: 1m
     id_token_lifespan: 1h
