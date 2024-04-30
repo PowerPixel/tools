@@ -1,7 +1,6 @@
 services:
   https-portal:
     image: steveltn/https-portal:1.23.1@sha256:23e4e3dd2283bd11470787634b40eed43aad5cf05879a53a80363143c135774b
-    env_file: ./outline.env
     ports:
       - '80:80'
       - '443:443'
