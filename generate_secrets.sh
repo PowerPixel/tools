@@ -9,10 +9,14 @@ JWT_SECRET_FILE="${SECRETS_ROOT}/JWT_SECRET"
 SESSION_SECRET_FILE="${SECRETS_ROOT}/SESSION_SECRET"
 OIDC_KEY="${SECRETS_ROOT}/oidc.pem"
 STORAGE_KEY="${SECRETS_ROOT}/STORAGE_KEY"
+JWK_OIDC_KEY="${SECRETS_ROOT}/JWK_OIDC_KEY"
+HMAC_SECRET="${SECRETS_ROOT}/HMAC_SECRET"
 
 if ! [ -e "${JWT_SECRET_FILE}" ]; then openssl rand -hex 64 > "${JWT_SECRET_FILE}" ; fi
 if ! [ -e "${SESSION_SECRET_FILE}" ]; then openssl rand -hex 64 > "${SESSION_SECRET_FILE}" ; fi
+if ! [ -e "${HMAC_SECRET}" ]; then openssl rand -hex 64 > "${HMAC_SECRET}" ; fi
 if ! [ -e "${OIDC_KEY}" ]; then openssl genrsa -out "${OIDC_KEY}" 4096 ; fi
 if ! [ -e "${STORAGE_KEY}" ]; then openssl rand -hex 64 > "${STORAGE_KEY}" ; fi
+if ! [ -e "${JWK_OIDC_KEY}" ]; then openssl genrsa -out "${JWK_OIDC_KEY}" 4096; fi
 
 echo "Secrets generated."
