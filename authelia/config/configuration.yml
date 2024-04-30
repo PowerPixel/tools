@@ -48,7 +48,7 @@ identity_providers:
   oidc:
     hmac_secret: this_is_a_secret_abc123abc123abc
     issuer_private_key: |
-      {{- fileContent "/secrets/oidc.key" | nindent 6 }} 
+      {{- fileContent "/secrets/oidc.pem" | nindent 6 }} 
     access_token_lifespan: 1h
     authorize_code_lifespan: 1m
     id_token_lifespan: 1h
