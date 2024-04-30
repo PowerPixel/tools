@@ -38,11 +38,11 @@ regulation:
 storage:
   postgres:
     address: 'tcp://postgres:5432'
-  database: 'authelia'
-  schema: 'public'
-  username: 'authelia'
-  password: 'authelia'
-  timeout: '5s'
+    database: 'authelia'
+    schema: 'public'
+    username: 'authelia'
+    password: 'authelia'
+    timeout: '5s'
 
 identity_providers:
   oidc:
