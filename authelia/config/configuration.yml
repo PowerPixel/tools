@@ -5,29 +5,22 @@ log:
   level: 'debug'
 
 totp:
-  issuer: 'authelia.com'
-
-identity_validation:
+  disable: false
 
 authentication_backend:
   file:
-    path: '/config/users_database.yml'
+    path: '/config/users.yml'
 
 access_control:
   default_policy: 'deny'
   rules:
-    # Rules applied to everyone
-    - domain: 'public.example.com'
-      policy: 'bypass'
-    - domain: 'traefik.example.com'
+    - domain_regex: '.*\.powerpixel\.fr'
       policy: 'one_factor'
-    - domain: 'secure.example.com'
-      policy: 'two_factor'
 
 session:
   cookies:
     - name: 'authelia_session'
-      domain: 'powerpixel.fr'  # Should match whatever your root protected domain is
+      domain: 'powerpixel.fr'
       authelia_url: 'https://authelia.powerpixel.fr'
       expiration: '1 hour'
       inactivity: '5 minutes'
@@ -50,3 +43,38 @@ storage:
   username: 'authelia'
   password: 'authelia'
   timeout: '5s'
+
+identity_providers:
+  oidc:
+    hmac_secret: this_is_a_secret_abc123abc123abc
+    issuer_private_key: |
+      {{- fileContent "/secrets/oidc.key" | nindent 6 }} 
+    access_token_lifespan: 1h
+    authorize_code_lifespan: 1m
+    id_token_lifespan: 1h
+    refresh_token_lifespan: 90m
+    enable_client_debug_messages: false
+    clients:
+      - id: outline
+        description: Outline
+        secret: this_is_a_secret
+        public: false
+        authorization_policy: one_factor
+        audience: []
+        scopes:
+          - openid
+          - groups
+          - email
+          - profile
+        redirect_uris:
+          - https://docs.powerpixel.fr/auth/oidc.callback
+        grant_types:
+          - refresh_token
+          - authorization_code
+        response_types:
+          - code
+        response_modes:
+          - form_post
+          - query
+          - fragment
+        userinfo_signing_algorithm: none
