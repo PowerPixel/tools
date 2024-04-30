@@ -4,6 +4,8 @@ version: '3.8'
 networks:
   oidc:
     external: true
+  https_portal:
+    external: true
 
 services:
   authelia:
@@ -13,6 +15,7 @@ services:
       - ./secrets:/secrets
     networks:
       - oidc
+      - https_portal
     expose:
       - 9091
     restart: unless-stopped

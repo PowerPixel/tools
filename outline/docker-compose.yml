@@ -6,21 +6,20 @@ services:
     image: docker.getoutline.com/outlinewiki/outline:0.75.2@sha256:830923e3e7b4b3f2969db56a6033a03947f9a191d35b60a1fd80ed130ade5a1d
     env_file: ./outline.env
     networks:
-      - db
-      - app
+      - https_portal
+      - redis
+      - postgres
+      - oidc
     ports:
       - "3000:3000"
     volumes:
       - /data/outline/raw:/var/lib/outline/data
-    depends_on:
-      - app
-      - postgres
-      - redis
-      - oidc
 
 networks:
-  app:
+  https_portal:
+    external: true
   redis:
+    external: true
   postgres:
     external: true
   oidc:
