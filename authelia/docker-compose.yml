@@ -11,8 +11,12 @@ services:
   authelia:
     image: authelia/authelia:4.38@sha256:19375b10024caeef4e0b119a6247beae84cbaa02c846cfd750e92dea910d4b6a
     volumes:
-      - ./config:/config
-      - ./secrets:/secrets
+      - type: bind
+        source: ./config
+        target: /config
+      - type: bind
+        source: ./secrets
+        target: /secrets
     networks:
       - oidc
       - https_portal
