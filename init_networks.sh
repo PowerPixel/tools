@@ -17,7 +17,7 @@ if ! docker ps > /dev/null 2>&1; then
     exit 1; 
 fi
 
-docker network create oidc;
-docker network create postgres;
-docker network create https_portal;
-docker network create redis;
+create_docker_network oidc;
+create_docker_network postgres;
+create_docker_network https_portal;
+create_docker_network redis;
