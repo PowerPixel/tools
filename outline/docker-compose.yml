@@ -10,8 +10,6 @@ services:
       - redis
       - postgres
       - oidc
-    ports:
-      - "3000:3000"
     volumes:
       - /data/outline/raw:/var/lib/outline/data
 
