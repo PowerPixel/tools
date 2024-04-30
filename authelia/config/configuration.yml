@@ -76,3 +76,6 @@ identity_providers:
           - query
           - fragment
         userinfo_signing_algorithm: none
+
+notifier:
+  disable_startup_check: true
