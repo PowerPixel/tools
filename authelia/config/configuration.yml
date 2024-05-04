@@ -55,12 +55,12 @@ identity_providers:
     refresh_token_lifespan: 90m
     enable_client_debug_messages: false
     clients:
-      - id: outline
+      - client_id: outline
+        client_name: 'Outline'
         description: Outline
-        secret: this_is_a_secret
+        client_secret: this_is_a_secret
         public: false
         authorization_policy: one_factor
-        audience: []
         scopes:
           - 'openid'
           - 'offline_access'
@@ -68,15 +68,6 @@ identity_providers:
           - 'email'
         redirect_uris:
           - https://docs.powerpixel.fr/auth/oidc.callback
-        grant_types:
-          - refresh_token
-          - authorization_code
-        response_types:
-          - code
-        response_modes:
-          - form_post
-          - query
-          - fragment
         userinfo_signing_algorithm: none
         token_endpoint_auth_method: 'client_secret_post'
 
